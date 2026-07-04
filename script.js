@@ -1,166 +1,723 @@
-// ===========================
-// LOADER
-// ===========================
+/* ===========================
+   RESET
+=========================== */
 
-window.addEventListener("load", () => {
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-    setTimeout(() => {
+html{
+    scroll-behavior:smooth;
+}
 
-        document.getElementById("loader").style.opacity = "0";
+body{
+    font-family:'Montserrat',sans-serif;
+    background:#faf7f2;
+    color:#3f3f3f;
+    overflow-x:hidden;
+}
 
-        setTimeout(() => {
-            document.getElementById("loader").style.display = "none";
-        }, 700);
+/* ===========================
+LOADER
+=========================== */
 
-    }, 1200);
+#loader{
+    position:fixed;
+    inset:0;
+    background:#faf7f2;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:99999;
+    transition:.7s;
+}
 
-});
+.loader-heart{
+    font-size:45px;
+    color:#b8860b;
+    animation:pulse 1.2s infinite;
+}
 
-// ===========================
-// ENVELOPE
-// ===========================
+@keyframes pulse{
 
-const envelope = document.getElementById("envelope");
-const envelopeSection = document.getElementById("envelope-section");
-const content = document.getElementById("content");
-const music = document.getElementById("music");
+0%{
+transform:scale(1);
+}
 
-envelope.addEventListener("click", () => {
+50%{
+transform:scale(1.25);
+}
 
-    envelope.classList.add("open");
-
-    if (music) {
-        music.play().catch(() => {});
-    }
-
-    setTimeout(() => {
-
-        envelopeSection.style.opacity = "0";
-
-        setTimeout(() => {
-
-            envelopeSection.style.display = "none";
-
-            content.style.display = "block";
-
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-
-        }, 900);
-
-    }, 1500);
-
-});
-
-// ===========================
-// COUNTDOWN
-// ===========================
-
-const weddingDate = new Date("2026-08-15T12:45:00").getTime();
-
-function updateCountdown() {
-
-    const now = new Date().getTime();
-
-    const distance = weddingDate - now;
-
-    if (distance <= 0) {
-
-        document.getElementById("days").innerHTML = "00";
-        document.getElementById("hours").innerHTML = "00";
-        document.getElementById("minutes").innerHTML = "00";
-        document.getElementById("seconds").innerHTML = "00";
-
-        return;
-
-    }
-
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24))
-        / (1000 * 60 * 60));
-
-    const minutes = Math.floor((distance % (1000 * 60 * 60))
-        / (1000 * 60));
-
-    const seconds = Math.floor((distance % (1000 * 60))
-        / 1000);
-
-    document.getElementById("days").innerHTML =
-        String(days).padStart(2, "0");
-
-    document.getElementById("hours").innerHTML =
-        String(hours).padStart(2, "0");
-
-    document.getElementById("minutes").innerHTML =
-        String(minutes).padStart(2, "0");
-
-    document.getElementById("seconds").innerHTML =
-        String(seconds).padStart(2, "0");
+100%{
+transform:scale(1);
+}
 
 }
 
-updateCountdown();
+/* ===========================
+ENVELOPE
+=========================== */
 
-setInterval(updateCountdown, 1000);
+#envelope-section{
 
-// ===========================
-// SCROLL ANIMATION
-// ===========================
+height:100vh;
 
-const observer = new IntersectionObserver(entries => {
+display:flex;
 
-    entries.forEach(entry => {
+justify-content:center;
 
-        if (entry.isIntersecting) {
+align-items:center;
 
-            entry.target.style.opacity = "1";
+background:linear-gradient(
+135deg,
+#faf7f2,
+#f5efe5);
 
-            entry.target.style.transform = "translateY(0px)";
+position:relative;
 
-        }
+overflow:hidden;
 
-    });
+}
 
-}, {
-    threshold: 0.2
-});
+.background-blur{
 
-document.querySelectorAll(
-".countdown-section,.timeline,.gallery,.quote,footer"
-).forEach(section => {
+position:absolute;
 
-    section.style.opacity = "0";
-    section.style.transform = "translateY(60px)";
-    section.style.transition = "1s";
+width:700px;
+height:700px;
 
-    observer.observe(section);
+background:#efe4d4;
 
-});
+border-radius:50%;
 
-// ===========================
-// PHOTO PLACEHOLDER
-// ===========================
+filter:blur(140px);
 
-document.querySelectorAll(".photo img").forEach(img => {
+opacity:.55;
 
-    img.onerror = function () {
+animation:float 8s infinite alternate;
 
-        this.src =
-            "https://placehold.co/700x900/f8f1e7/b88a32?text=Ваше+фото";
+}
 
-    };
+@keyframes float{
 
-});
+from{
 
-// ===========================
-// OPTIONAL MUSIC BUTTON
-// ===========================
+transform:translateY(-30px);
 
-if (music) {
+}
 
-    music.volume = 0.4;
+to{
+
+transform:translateY(30px);
+
+}
+
+}
+
+.envelope-wrapper{
+
+perspective:1200px;
+
+}
+
+#envelope{
+
+position:relative;
+
+width:340px;
+
+height:220px;
+
+cursor:pointer;
+
+transform-style:preserve-3d;
+
+transition:1s;
+
+}
+
+/* Нижня частина */
+
+#envelope::before{
+
+content:"";
+
+position:absolute;
+
+bottom:0;
+
+width:100%;
+
+height:100%;
+
+background:#e8d8c4;
+
+border-radius:10px;
+
+box-shadow:
+
+0 20px 40px rgba(0,0,0,.15);
+
+}
+
+/* Кришка */
+
+.flap{
+
+position:absolute;
+
+top:0;
+
+width:100%;
+height:110px;
+
+background:#ddc6aa;
+
+clip-path:polygon(
+0 0,
+100% 0,
+50% 100%
+);
+
+transform-origin:top;
+
+transition:1s;
+
+z-index:5;
+
+}
+
+/* Лист */
+
+.letter{
+
+position:absolute;
+
+left:20px;
+
+top:20px;
+
+width:300px;
+
+height:180px;
+
+background:white;
+
+border-radius:8px;
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+align-items:center;
+
+box-shadow:
+0 10px 25px rgba(0,0,0,.08);
+
+transition:1s;
+
+z-index:2;
+
+}
+
+.letter h2{
+
+font-family:'Cormorant Garamond',serif;
+
+font-size:40px;
+
+font-weight:600;
+
+margin-bottom:15px;
+
+color:#8a6a2b;
+
+}
+
+.letter p{
+
+letter-spacing:2px;
+
+font-size:14px;
+
+text-transform:uppercase;
+
+color:#777;
+
+}
+
+/* відкритий */
+
+#envelope.open .flap{
+
+transform:rotateX(180deg);
+
+}
+
+#envelope.open .letter{
+
+transform:translateY(-170px);
+
+}
+
+/* ===========================
+CONTENT
+=========================== */
+
+#content{
+
+display:none;
+
+animation:fadeIn 1.5s;
+
+}
+
+@keyframes fadeIn{
+
+from{
+
+opacity:0;
+
+transform:translateY(25px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
+
+/* ===========================
+HERO
+=========================== */
+
+.hero{
+
+height:100vh;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+text-align:center;
+
+position:relative;
+
+overflow:hidden;
+
+padding:20px;
+
+background:
+linear-gradient(
+180deg,
+#fffdf9,
+#f8f1e7);
+
+}
+
+.hero::before{
+
+content:"";
+
+position:absolute;
+
+width:900px;
+
+height:900px;
+
+background:
+
+radial-gradient(circle,
+rgba(212,180,105,.18),
+transparent 70%);
+
+animation:rotateLight 30s linear infinite;
+
+}
+
+@keyframes rotateLight{
+
+from{
+
+transform:rotate(0deg);
+
+}
+
+to{
+
+transform:rotate(360deg);
+
+}
+
+}
+
+.hero-content{
+
+position:relative;
+
+z-index:2;
+
+max-width:800px;
+
+}
+
+.hero h3{
+
+font-family:'Montserrat';
+
+font-weight:400;
+
+letter-spacing:6px;
+
+text-transform:uppercase;
+
+font-size:14px;
+
+margin-bottom:20px;
+
+color:#888;
+
+}
+
+.hero h1{
+
+font-family:'Great Vibes',cursive;
+
+font-size:88px;
+
+font-weight:400;
+
+color:#8d6d2f;
+
+line-height:1.15;
+
+}
+
+.hero h1 span{
+
+margin:0 20px;
+
+font-size:72px;
+
+color:#b88a32;
+
+}
+
+.hero p{
+
+margin:40px auto;
+
+max-width:620px;
+
+font-size:22px;
+
+line-height:1.8;
+
+font-family:'Cormorant Garamond',serif;
+
+}
+
+.date{
+
+display:inline-block;
+
+padding:18px 45px;
+
+border:1px solid #d4b469;
+
+border-radius:50px;
+
+font-size:20px;
+
+letter-spacing:3px;
+
+background:white;
+
+box-shadow:
+
+0 15px 40px rgba(0,0,0,.08);
+
+}
+
+/* ===========================
+COUNTDOWN
+=========================== */
+
+.countdown-section{
+    padding:120px 20px;
+    text-align:center;
+    background:#fff;
+}
+
+.countdown-section h2{
+    font-family:'Cormorant Garamond',serif;
+    font-size:48px;
+    color:#8d6d2f;
+    margin-bottom:60px;
+}
+
+#countdown{
+    display:flex;
+    justify-content:center;
+    gap:30px;
+    flex-wrap:wrap;
+}
+
+#countdown div{
+    width:150px;
+    height:150px;
+    border-radius:50%;
+    background:#faf7f2;
+    border:2px solid #d4b469;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    box-shadow:0 15px 30px rgba(0,0,0,.08);
+}
+
+#countdown span{
+    font-size:52px;
+    font-weight:600;
+    color:#8d6d2f;
+}
+
+#countdown small{
+    margin-top:8px;
+    font-size:14px;
+    text-transform:uppercase;
+    letter-spacing:2px;
+    color:#666;
+}
+
+/* ===========================
+TIMELINE
+=========================== */
+
+.timeline{
+    padding:120px 20px;
+    background:#faf7f2;
+}
+
+.timeline h2{
+    text-align:center;
+    font-size:52px;
+    margin-bottom:80px;
+    font-family:'Cormorant Garamond',serif;
+    color:#8d6d2f;
+}
+
+.event{
+    max-width:900px;
+    margin:40px auto;
+    display:flex;
+    align-items:center;
+    gap:40px;
+    background:white;
+    padding:40px;
+    border-radius:24px;
+    box-shadow:0 15px 40px rgba(0,0,0,.08);
+}
+
+.icon{
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    background:#f7eddc;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:42px;
+    flex-shrink:0;
+}
+
+.info h3{
+    font-size:34px;
+    font-family:'Cormorant Garamond',serif;
+    margin-bottom:10px;
+    color:#8d6d2f;
+}
+
+.info h4{
+    font-size:28px;
+    margin-bottom:15px;
+}
+
+.info p{
+    line-height:1.8;
+    margin-bottom:20px;
+}
+
+.info a{
+    display:inline-block;
+    padding:14px 30px;
+    border-radius:40px;
+    background:#b88a32;
+    color:white;
+    text-decoration:none;
+    transition:.3s;
+}
+
+.info a:hover{
+    background:#8d6d2f;
+    transform:translateY(-2px);
+}
+
+/* ===========================
+GALLERY
+=========================== */
+
+.gallery{
+    padding:120px 20px;
+    background:white;
+}
+
+.gallery h2{
+    text-align:center;
+    font-size:50px;
+    margin-bottom:60px;
+    color:#8d6d2f;
+    font-family:'Cormorant Garamond',serif;
+}
+
+.photos{
+    max-width:1200px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:30px;
+}
+
+.photo{
+    overflow:hidden;
+    border-radius:24px;
+    box-shadow:0 15px 35px rgba(0,0,0,.1);
+}
+
+.photo img{
+    width:100%;
+    height:420px;
+    object-fit:cover;
+    transition:.6s;
+}
+
+.photo:hover img{
+    transform:scale(1.08);
+}
+
+/* ===========================
+QUOTE
+=========================== */
+
+.quote{
+    padding:120px 30px;
+    text-align:center;
+    background:#f8f1e7;
+}
+
+.quote p{
+    max-width:850px;
+    margin:auto;
+    font-family:'Great Vibes',cursive;
+    font-size:58px;
+    color:#8d6d2f;
+    line-height:1.5;
+}
+
+/* ===========================
+FOOTER
+=========================== */
+
+footer{
+    padding:120px 20px;
+    text-align:center;
+    background:white;
+}
+
+footer h2{
+    font-family:'Cormorant Garamond',serif;
+    font-size:42px;
+    margin-bottom:20px;
+    color:#8d6d2f;
+}
+
+footer h1{
+    font-family:'Great Vibes',cursive;
+    font-size:82px;
+    margin-bottom:20px;
+    color:#8d6d2f;
+}
+
+footer h1 span{
+    margin:0 20px;
+}
+
+footer p{
+    letter-spacing:3px;
+    font-size:20px;
+}
+
+/* ===========================
+RESPONSIVE
+=========================== */
+
+@media(max-width:768px){
+
+.hero h1{
+    font-size:58px;
+}
+
+.hero h1 span{
+    display:block;
+    margin:10px 0;
+}
+
+.hero p{
+    font-size:18px;
+}
+
+.countdown-section h2,
+.timeline h2,
+.gallery h2,
+footer h2{
+    font-size:38px;
+}
+
+.event{
+    flex-direction:column;
+    text-align:center;
+}
+
+#countdown div{
+    width:120px;
+    height:120px;
+}
+
+#countdown span{
+    font-size:40px;
+}
+
+.quote p{
+    font-size:40px;
+}
+
+footer h1{
+    font-size:56px;
+}
+
+.photo img{
+    height:320px;
+}
 
 }
