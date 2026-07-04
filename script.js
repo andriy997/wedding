@@ -15,7 +15,7 @@ window.addEventListener("load", () => {
 });
 
 // ===========================
-// ENVELOPE (Оновлена логіка під нову заставку)
+// ENVELOPE (Анімація повільного роз'їзду на 5.5с)
 // ===========================
 
 const openBtn = document.getElementById("openBtn");
@@ -26,30 +26,30 @@ const music = document.getElementById("music");
 if (openBtn && envelopeSection && content) {
     openBtn.addEventListener("click", () => {
         
-        // Додаємо клас для плавної зміни прозорості всього конверта
+        // 1. Показуємо контент сайту миттєво під конвертом
+        content.style.display = "block";
+
+        // 2. Активуємо анімацію розсування паперових клапанів
         envelopeSection.classList.add("hidden");
 
-        // Запуск весільної музики
+        // Запуск музики
         if (music) {
             music.play().catch((err) => {
-                console.log("Автовідтворення заблоковано браузером. Потрібна пряма взаємодія користувача.", err);
+                console.log("Музику заблоковано браузером до взаємодії", err);
             });
         }
 
-        // Чекаємо завершення CSS-анімації зникнення (1 секунда)
+        // 3. Повністю прибираємо верхній шар після того, як листи роз'їдуться (5.5 секунд)
         setTimeout(() => {
             envelopeSection.style.display = "none";
-            content.style.display = "block";
 
-            // Скидаємо скролл на початок сторінки
             window.scrollTo({
                 top: 0,
                 behavior: "smooth"
             });
-        }, 1000);
+        }, 5500); // Таймер синхронізовано на 5.5 секунд
     });
 }
-
 // ===========================
 // COUNTDOWN
 // ===========================
