@@ -41,227 +41,148 @@ LOADER
 }
 
 @keyframes pulse{
-
-0%{
-transform:scale(1);
-}
-
-50%{
-transform:scale(1.25);
-}
-
-100%{
-transform:scale(1);
-}
-
+    0%{ transform:scale(1); }
+    50%{ transform:scale(1.25); }
+    100%{ transform:scale(1); }
 }
 
 /* ===========================
-ENVELOPE
+NEW PASTEL ENVELOPE & SEAL BUTTON
 =========================== */
 
 #envelope-section{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background-color:#f1ede2; /* Пастельний матовий тон */
+    position:fixed;
+    inset:0;
+    z-index:9999;
+    overflow:hidden;
+    transition: opacity 1s ease, visibility 1s ease;
+}
 
-height:100vh;
-
-display:flex;
-
-justify-content:center;
-
-align-items:center;
-
-background:linear-gradient(
-135deg,
-#faf7f2,
-#f5efe5);
-
-position:relative;
-
-overflow:hidden;
-
+/* Стан коли конверт відкрито (ховаємо секцію) */
+#envelope-section.hidden {
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
 }
 
 .background-blur{
-
-position:absolute;
-
-width:700px;
-height:700px;
-
-background:#efe4d4;
-
-border-radius:50%;
-
-filter:blur(140px);
-
-opacity:.55;
-
-animation:float 8s infinite alternate;
-
+    position:absolute;
+    width:700px;
+    height:700px;
+    background:#efe4d4;
+    border-radius:50%;
+    filter:blur(140px);
+    opacity:.55;
+    animation:float 8s infinite alternate;
+    z-index: 1;
 }
 
 @keyframes float{
-
-from{
-
-transform:translateY(-30px);
-
-}
-
-to{
-
-transform:translateY(30px);
-
-}
-
+    from{ transform:translateY(-30px); }
+    to{ transform:translateY(30px); }
 }
 
 .envelope-wrapper{
-
-perspective:1200px;
-
+    position:relative;
+    width:100%;
+    height:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index: 2;
 }
 
 #envelope{
-
-position:relative;
-
-width:340px;
-
-height:220px;
-
-cursor:pointer;
-
-transform-style:preserve-3d;
-
-transition:1s;
-
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
 }
 
-/* Нижня частина */
-
-#envelope::before{
-
-content:"";
-
-position:absolute;
-
-bottom:0;
-
-width:100%;
-
-height:100%;
-
-background:#e8d8c4;
-
-border-radius:10px;
-
-box-shadow:
-
-0 20px 40px rgba(0,0,0,.15);
-
+/* Об'ємні пастельні клапани паперу конверта */
+.envelope-flaps {
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    pointer-events:none;
 }
 
-/* Кришка */
-
-.flap{
-
-position:absolute;
-
-top:0;
-
-width:100%;
-height:110px;
-
-background:#ddc6aa;
-
-clip-path:polygon(
-0 0,
-100% 0,
-50% 100%
-);
-
-transform-origin:top;
-
-transition:1s;
-
-z-index:5;
-
+/* Верхній трикутник з м'якою тінню */
+.envelope-flaps::before {
+    content:'';
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:linear-gradient(180deg, #eae5d8 0%, #f4eee1 100%);
+    clip-path:polygon(0% 0%, 100% 0%, 50% 50%);
+    filter:drop-shadow(0px 8px 20px rgba(135, 125, 110, 0.3));
+    z-index:2;
 }
 
-/* Лист */
-
-.letter{
-
-position:absolute;
-
-left:20px;
-
-top:20px;
-
-width:300px;
-
-height:180px;
-
-background:white;
-
-border-radius:8px;
-
-display:flex;
-
-flex-direction:column;
-
-justify-content:center;
-
-align-items:center;
-
-box-shadow:
-0 10px 25px rgba(0,0,0,.08);
-
-transition:1s;
-
-z-index:2;
-
+/* Нижній трикутник паперу */
+.envelope-flaps::after {
+    content:'';
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:linear-gradient(0deg, #e5dfd0 0%, #f0ebde 100%);
+    clip-path:polygon(0% 100%, 100% 100%, 50% 50%);
+    z-index:1;
 }
 
-.letter h2{
-
-font-family:'Cormorant Garamond',serif;
-
-font-size:40px;
-
-font-weight:600;
-
-margin-bottom:15px;
-
-color:#8a6a2b;
-
+/* Додаткові пастельні шви конверта */
+.envelope-lines {
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    z-index:3;
+    background:
+        linear-gradient(to top right, transparent 49.8%, rgba(165, 155, 135, 0.2) 50%, transparent 50.2%),
+        linear-gradient(to bottom right, transparent 49.8%, rgba(165, 155, 135, 0.2) 50%, transparent 50.2%);
+    pointer-events:none;
 }
 
-.letter p{
-
-letter-spacing:2px;
-
-font-size:14px;
-
-text-transform:uppercase;
-
-color:#777;
-
+/* Кнопка-печатка з твого фото `envelope.png` */
+.seal-btn {
+    position:relative;
+    z-index:10;
+    width:175px;  
+    height:175px;
+    background-image:url('envelope.png'); /* Фото вашої кнопки */
+    background-size:contain;
+    background-repeat:no-repeat;
+    background-position:center;
+    background-color:transparent;
+    border:none;
+    outline:none;
+    cursor:pointer;
+    border-radius:50%;
+    /* Глибока розсіяна тінь як на фотографії */
+    filter:drop-shadow(0px 10px 22px rgba(105, 90, 70, 0.35));
+    transition:transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.15), filter 0.25s ease;
 }
 
-/* відкритий */
-
-#envelope.open .flap{
-
-transform:rotateX(180deg);
-
+.seal-btn:hover {
+    transform:scale(1.04);
+    filter:drop-shadow(0px 14px 28px rgba(105, 90, 70, 0.4));
 }
 
-#envelope.open .letter{
-
-transform:translateY(-170px);
-
+.seal-btn:active {
+    transform:scale(0.96);
+    filter:drop-shadow(0px 5px 10px rgba(105, 90, 70, 0.25));
 }
 
 /* ===========================
@@ -269,31 +190,19 @@ CONTENT
 =========================== */
 
 #content{
-
-display:none;
-
-animation:fadeIn 1.5s;
-
+    display:none;
+    animation:fadeIn 1.5s ease forwards;
 }
 
 @keyframes fadeIn{
-
-from{
-
-opacity:0;
-
-transform:translateY(25px);
-
-}
-
-to{
-
-opacity:1;
-
-transform:translateY(0);
-
-}
-
+    from{
+        opacity:0;
+        transform:translateY(25px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
 }
 
 /* ===========================
@@ -301,153 +210,78 @@ HERO
 =========================== */
 
 .hero{
-
-height:100vh;
-
-display:flex;
-
-justify-content:center;
-
-align-items:center;
-
-text-align:center;
-
-position:relative;
-
-overflow:hidden;
-
-padding:20px;
-
-background:
-linear-gradient(
-180deg,
-#fffdf9,
-#f8f1e7);
-
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+    padding:20px;
+    background:linear-gradient(180deg, #fffdf9, #f8f1e7);
 }
 
 .hero::before{
-
-content:"";
-
-position:absolute;
-
-width:900px;
-
-height:900px;
-
-background:
-
-radial-gradient(circle,
-rgba(212,180,105,.18),
-transparent 70%);
-
-animation:rotateLight 30s linear infinite;
-
+    content:"";
+    position:absolute;
+    width:900px;
+    height:900px;
+    background:radial-gradient(circle, rgba(212,180,105,.18), transparent 70%);
+    animation:rotateLight 30s linear infinite;
 }
 
 @keyframes rotateLight{
-
-from{
-
-transform:rotate(0deg);
-
-}
-
-to{
-
-transform:rotate(360deg);
-
-}
-
+    from{ transform:rotate(0deg); }
+    to{ transform:rotate(360deg); }
 }
 
 .hero-content{
-
-position:relative;
-
-z-index:2;
-
-max-width:800px;
-
+    position:relative;
+    z-index:2;
+    max-width:800px;
 }
 
 .hero h3{
-
-font-family:'Montserrat';
-
-font-weight:400;
-
-letter-spacing:6px;
-
-text-transform:uppercase;
-
-font-size:14px;
-
-margin-bottom:20px;
-
-color:#888;
-
+    font-family:'Montserrat', sans-serif;
+    font-weight:400;
+    letter-spacing:6px;
+    text-transform:uppercase;
+    font-size:14px;
+    margin-bottom:20px;
+    color:#888;
 }
 
 .hero h1{
-
-font-family:'Great Vibes',cursive;
-
-font-size:88px;
-
-font-weight:400;
-
-color:#8d6d2f;
-
-line-height:1.15;
-
+    font-family:'Great Vibes',cursive;
+    font-size:88px;
+    font-weight:400;
+    color:#8d6d2f;
+    line-height:1.15;
 }
 
 .hero h1 span{
-
-margin:0 20px;
-
-font-size:72px;
-
-color:#b88a32;
-
+    margin:0 20px;
+    font-size:72px;
+    color:#b88a32;
 }
 
 .hero p{
-
-margin:40px auto;
-
-max-width:620px;
-
-font-size:22px;
-
-line-height:1.8;
-
-font-family:'Cormorant Garamond',serif;
-
+    margin:40px auto;
+    max-width:620px;
+    font-size:22px;
+    line-height:1.8;
+    font-family:'Cormorant Garamond',serif;
 }
 
 .date{
-
-display:inline-block;
-
-padding:18px 45px;
-
-border:1px solid #d4b469;
-
-border-radius:50px;
-
-font-size:20px;
-
-letter-spacing:3px;
-
-background:white;
-
-box-shadow:
-
-0 15px 40px rgba(0,0,0,.08);
-
+    display:inline-block;
+    padding:18px 45px;
+    border:1px solid #d4b469;
+    border-radius:50px;
+    font-size:20px;
+    letter-spacing:3px;
+    background:white;
+    box-shadow:0 15px 40px rgba(0,0,0,.08);
 }
 
 /* ===========================
@@ -673,51 +507,54 @@ RESPONSIVE
 =========================== */
 
 @media(max-width:768px){
+    .hero h1{
+        font-size:58px;
+    }
 
-.hero h1{
-    font-size:58px;
-}
+    .hero h1 span{
+        display:block;
+        margin:10px 0;
+    }
 
-.hero h1 span{
-    display:block;
-    margin:10px 0;
-}
+    .hero p{
+        font-size:18px;
+    }
 
-.hero p{
-    font-size:18px;
-}
+    .countdown-section h2,
+    .timeline h2,
+    .gallery h2,
+    footer h2{
+        font-size:38px;
+    }
 
-.countdown-section h2,
-.timeline h2,
-.gallery h2,
-footer h2{
-    font-size:38px;
-}
+    .event{
+        flex-direction:column;
+        text-align:center;
+    }
 
-.event{
-    flex-direction:column;
-    text-align:center;
-}
+    #countdown div{
+        width:120px;
+        height:120px;
+    }
 
-#countdown div{
-    width:120px;
-    height:120px;
-}
+    #countdown span{
+        font-size:40px;
+    }
 
-#countdown span{
-    font-size:40px;
-}
+    .quote p{
+        font-size:40px;
+    }
 
-.quote p{
-    font-size:40px;
-}
+    footer h1{
+        font-size:56px;
+    }
 
-footer h1{
-    font-size:56px;
-}
-
-.photo img{
-    height:320px;
-}
-
+    .photo img{
+        height:320px;
+    }
+    
+    .seal-btn {
+        width: 140px;
+        height: 140px;
+    }
 }
