@@ -25,36 +25,32 @@ const envelopeSection = document.getElementById("envelope-section");
 const content = document.getElementById("content");
 const music = document.getElementById("music");
 
-const openButton = document.getElementById("openButton");
-
-openButton.addEventListener("click", () => {
-
-    openButton.style.pointerEvents = "none";
+envelope.addEventListener("click", () => {
 
     envelope.classList.add("open");
 
-    if(music){
-        music.play().catch(()=>{});
+    if (music) {
+        music.play().catch(() => {});
     }
 
-    setTimeout(()=>{
+    setTimeout(() => {
 
-        envelopeSection.style.opacity="0";
+        envelopeSection.style.opacity = "0";
 
-        setTimeout(()=>{
+        setTimeout(() => {
 
-            envelopeSection.style.display="none";
+            envelopeSection.style.display = "none";
 
-            content.style.display="block";
+            content.style.display = "block";
 
             window.scrollTo({
-                top:0,
-                behavior:"smooth"
+                top: 0,
+                behavior: "smooth"
             });
 
-        },900);
+        }, 900);
 
-    },1500);
+    }, 1500);
 
 });
 
