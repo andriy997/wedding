@@ -3,56 +3,52 @@
 // ===========================
 
 window.addEventListener("load", () => {
-
     setTimeout(() => {
-
-        document.getElementById("loader").style.opacity = "0";
-
-        setTimeout(() => {
-            document.getElementById("loader").style.display = "none";
-        }, 700);
-
+        const loader = document.getElementById("loader");
+        if (loader) {
+            loader.style.opacity = "0";
+            setTimeout(() => {
+                loader.style.display = "none";
+            }, 700);
+        }
     }, 1200);
-
 });
 
 // ===========================
-// ENVELOPE
+// ENVELOPE (Оновлена логіка під нову заставку)
 // ===========================
 
-const envelope = document.getElementById("envelope");
+const openBtn = document.getElementById("openBtn");
 const envelopeSection = document.getElementById("envelope-section");
 const content = document.getElementById("content");
 const music = document.getElementById("music");
 
-envelope.addEventListener("click", () => {
+if (openBtn && envelopeSection && content) {
+    openBtn.addEventListener("click", () => {
+        
+        // Додаємо клас для плавної зміни прозорості всього конверта
+        envelopeSection.classList.add("hidden");
 
-    envelope.classList.add("open");
+        // Запуск весільної музики
+        if (music) {
+            music.play().catch((err) => {
+                console.log("Автовідтворення заблоковано браузером. Потрібна пряма взаємодія користувача.", err);
+            });
+        }
 
-    if (music) {
-        music.play().catch(() => {});
-    }
-
-    setTimeout(() => {
-
-        envelopeSection.style.opacity = "0";
-
+        // Чекаємо завершення CSS-анімації зникнення (1 секунда)
         setTimeout(() => {
-
             envelopeSection.style.display = "none";
-
             content.style.display = "block";
 
+            // Скидаємо скролл на початок сторінки
             window.scrollTo({
                 top: 0,
                 behavior: "smooth"
             });
-
-        }, 900);
-
-    }, 1500);
-
-});
+        }, 1000);
+    });
+}
 
 // ===========================
 // COUNTDOWN
@@ -61,49 +57,32 @@ envelope.addEventListener("click", () => {
 const weddingDate = new Date("2026-08-15T12:45:00").getTime();
 
 function updateCountdown() {
-
     const now = new Date().getTime();
-
     const distance = weddingDate - now;
 
     if (distance <= 0) {
-
         document.getElementById("days").innerHTML = "00";
         document.getElementById("hours").innerHTML = "00";
         document.getElementById("minutes").innerHTML = "00";
         document.getElementById("seconds").innerHTML = "00";
-
         return;
-
     }
 
     const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24))
-        / (1000 * 60 * 60));
-
-    const minutes = Math.floor((distance % (1000 * 60 * 60))
-        / (1000 * 60));
-
-    const seconds = Math.floor((distance % (1000 * 60))
-        / 1000);
-
-    document.getElementById("days").innerHTML =
-        String(days).padStart(2, "0");
-
-    document.getElementById("hours").innerHTML =
-        String(hours).padStart(2, "0");
-
-    document.getElementById("minutes").innerHTML =
-        String(minutes).padStart(2, "0");
-
-    document.getElementById("seconds").innerHTML =
-        String(seconds).padStart(2, "0");
-
+    // Додаємо перевірку на існування елементів, щоб уникнути помилок у консолі
+    if (document.getElementById("days")) {
+        document.getElementById("days").innerHTML = String(days).padStart(2, "0");
+        document.getElementById("hours").innerHTML = String(hours).padStart(2, "0");
+        document.getElementById("minutes").innerHTML = String(minutes).padStart(2, "0");
+        document.getElementById("seconds").innerHTML = String(seconds).padStart(2, "0");
+    }
 }
 
 updateCountdown();
-
 setInterval(updateCountdown, 1000);
 
 // ===========================
@@ -111,33 +90,21 @@ setInterval(updateCountdown, 1000);
 // ===========================
 
 const observer = new IntersectionObserver(entries => {
-
     entries.forEach(entry => {
-
         if (entry.isIntersecting) {
-
             entry.target.style.opacity = "1";
-
             entry.target.style.transform = "translateY(0px)";
-
         }
-
     });
-
 }, {
-    threshold: 0.2
+    threshold: 0.15
 });
 
-document.querySelectorAll(
-".countdown-section,.timeline,.gallery,.quote,footer"
-).forEach(section => {
-
+document.querySelectorAll(".countdown-section, .timeline, .gallery, .quote, footer").forEach(section => {
     section.style.opacity = "0";
-    section.style.transform = "translateY(60px)";
-    section.style.transition = "1s";
-
+    section.style.transform = "translateY(40px)";
+    section.style.transition = "opacity 1.2s ease, transform 1.2s ease";
     observer.observe(section);
-
 });
 
 // ===========================
@@ -145,22 +112,15 @@ document.querySelectorAll(
 // ===========================
 
 document.querySelectorAll(".photo img").forEach(img => {
-
     img.onerror = function () {
-
-        this.src =
-            "https://placehold.co/700x900/f8f1e7/b88a32?text=Ваше+фото";
-
+        this.src = "https://placehold.co/700x900/f8f1e7/b88a32?text=Ваше+фото";
     };
-
 });
 
 // ===========================
-// OPTIONAL MUSIC BUTTON
+// MUSIC CONFIG
 // ===========================
 
 if (music) {
-
     music.volume = 0.4;
-
 }
