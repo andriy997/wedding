@@ -50,65 +50,28 @@ LOADER
 NEW PASTEL ENVELOPE & SEAL BUTTON
 =========================== */
 
+/* --- ЕКРАН КОНВЕРТА --- */
 #envelope-section{
     height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
-    background-color:#f1ede2; /* Пастельний матовий тон */
+    background-color:#f1ede2;
     position:fixed;
     inset:0;
     z-index:9999;
     overflow:hidden;
-    transition: opacity 1s ease, visibility 1s ease;
+    /* Час утримання видимості блоку збільшено до 5.5с */
+    transition: background-color 0.4s ease, visibility 5.5s ease; 
 }
 
-/* Стан коли конверт відкрито (ховаємо секцію) */
 #envelope-section.hidden {
-    opacity:0;
-    visibility:hidden;
-    pointer-events:none;
+    background-color: transparent;
+    visibility: hidden;
+    pointer-events: none;
 }
 
-.background-blur{
-    position:absolute;
-    width:700px;
-    height:700px;
-    background:#efe4d4;
-    border-radius:50%;
-    filter:blur(140px);
-    opacity:.55;
-    animation:float 8s infinite alternate;
-    z-index: 1;
-}
-
-@keyframes float{
-    from{ transform:translateY(-30px); }
-    to{ transform:translateY(30px); }
-}
-
-.envelope-wrapper{
-    position:relative;
-    width:100%;
-    height:100%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    z-index: 2;
-}
-
-#envelope{
-    position:absolute;
-    width:100%;
-    height:100%;
-    top:0;
-    left:0;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-}
-
-/* Об'ємні пастельні клапани паперу конверта */
+/* Об'ємні пастельні клапани конверта */
 .envelope-flaps {
     position:absolute;
     width:100%;
@@ -116,52 +79,75 @@ NEW PASTEL ENVELOPE & SEAL BUTTON
     top:0;
     left:0;
     pointer-events:none;
+    z-index: 2;
 }
 
-/* Верхній трикутник з м'якою тінню */
+/* Лівий клапан — сповільнений до 5.5 секунд */
 .envelope-flaps::before {
     content:'';
     position:absolute;
-    width:100%;
+    top:0;
+    left:0;
+    width:50%;
     height:100%;
-    background:linear-gradient(180deg, #eae5d8 0%, #f4eee1 100%);
-    clip-path:polygon(0% 0%, 100% 0%, 50% 50%);
-    filter:drop-shadow(0px 8px 20px rgba(135, 125, 110, 0.3));
-    z-index:2;
+    background: linear-gradient(135deg, #eae5d8 0%, #f4eee1 100%);
+    clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
+    filter: drop-shadow(8px 0px 18px rgba(95, 85, 70, 0.45)) drop-shadow(2px 0px 4px rgba(95, 85, 70, 0.3));
+    /* 5.5 секунд із кінематографічним типом руху */
+    transition: transform 5.5s cubic-bezier(0.33, 1, 0.68, 1);
+    z-index: 2;
 }
 
-/* Нижній трикутник паперу */
+/* Правий клапан — сповільнений до 5.5 секунд */
 .envelope-flaps::after {
     content:'';
     position:absolute;
-    width:100%;
+    top:0;
+    right:0;
+    width:50%;
     height:100%;
-    background:linear-gradient(0deg, #e5dfd0 0%, #f0ebde 100%);
-    clip-path:polygon(0% 100%, 100% 100%, 50% 50%);
-    z-index:1;
+    background: linear-gradient(-135deg, #e5dfd0 0%, #f0ebde 100%);
+    clip-path: polygon(100% 0%, 100% 100%, 0% 50%);
+    filter: drop-shadow(-4px 0px 12px rgba(95, 85, 70, 0.2));
+    transition: transform 5.5s cubic-bezier(0.33, 1, 0.68, 1);
+    z-index: 1;
 }
 
-/* Додаткові пастельні шви конверта */
+/* Рух паперу */
+#envelope-section.hidden .envelope-flaps::before {
+    transform: translateX(-106%);
+}
+
+#envelope-section.hidden .envelope-flaps::after {
+    transform: translateX(106%);
+}
+
+/* Лінії швів */
 .envelope-lines {
     position:absolute;
     width:100%;
     height:100%;
     top:0;
     left:0;
-    z-index:3;
+    z-index: 3;
     background:
-        linear-gradient(to top right, transparent 49.8%, rgba(165, 155, 135, 0.2) 50%, transparent 50.2%),
-        linear-gradient(to bottom right, transparent 49.8%, rgba(165, 155, 135, 0.2) 50%, transparent 50.2%);
+        linear-gradient(to top right, transparent 49.7%, rgba(130, 115, 95, 0.35) 50%, transparent 50.3%),
+        linear-gradient(to bottom right, transparent 49.7%, rgba(130, 115, 95, 0.35) 50%, transparent 50.3%);
     pointer-events:none;
+    transition: opacity 0.5s ease;
 }
 
-/* Кнопка-печатка з твого фото `envelope.png` */
+#envelope-section.hidden .envelope-lines {
+    opacity: 0;
+}
+
+/* Печатка з вашого фото */
 .seal-btn {
     position:relative;
     z-index:10;
     width:175px;  
     height:175px;
-    background-image:url('envelope.png'); /* Без папок, просто назва файлу */
+    background-image:url('envelope.png');
     background-size:contain;
     background-repeat:no-repeat;
     background-position:center;
@@ -170,18 +156,14 @@ NEW PASTEL ENVELOPE & SEAL BUTTON
     outline:none;
     cursor:pointer;
     border-radius:50%;
-    filter:drop-shadow(0px 10px 22px rgba(105, 90, 70, 0.35));
-    transition:transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.15), filter 0.25s ease;
+    filter:drop-shadow(0px 12px 24px rgba(90, 75, 55, 0.45));
+    transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.15), filter 0.25s ease, opacity 0.6s ease;
 }
 
-.seal-btn:hover {
-    transform:scale(1.04);
-    filter:drop-shadow(0px 14px 28px rgba(105, 90, 70, 0.4));
-}
-
-.seal-btn:active {
-    transform:scale(0.96);
-    filter:drop-shadow(0px 5px 10px rgba(105, 90, 70, 0.25));
+#envelope-section.hidden .seal-btn {
+    opacity: 0;
+    transform: scale(0.3);
+    pointer-events: none;
 }
 
 /* ===========================
@@ -203,7 +185,6 @@ CONTENT
         transform:translateY(0);
     }
 }
-
 /* ===========================
 HERO
 =========================== */
@@ -237,52 +218,98 @@ HERO
 .hero-content{
     position:relative;
     z-index:2;
-    max-width:800px;
+    max-width:850px;
 }
 
+/* "Запрошення на весілля" — тепер із нормальним регістром літер */
 .hero h3{
-    font-family:'Montserrat', sans-serif;
-    font-weight:400;
-    letter-spacing:6px;
-    text-transform:uppercase;
-    font-size:14px;
-    margin-bottom:20px;
-    color:#888;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-style: normal; 
+    letter-spacing: 2px; /* Трохи зменшили відступ, бо літери тепер не великі */
+    text-transform: none; /* ВИПРАВЛЕНО: прибирає автоматичні великі літери */
+    font-size: 32px; /* Збільшили розмір, щоб звичайні літери виглядали так само масштабно */
+    margin-bottom: 35px;
+    color: #a89276; 
+    background: transparent;
+    padding: 0;
+    box-shadow: none;
 }
 
-.hero h1{
-    font-family:'Great Vibes',cursive;
-    font-size:88px;
-    font-weight:400;
-    color:#8d6d2f;
-    line-height:1.15;
+/* Імена — витончений курсив із гострою літерою А */
+.hero h1.wedding-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; 
+    font-size: 68px;
+    font-weight: 300;
+    color: #5c4d37;
+    line-height: 1.2;
+    letter-spacing: 1px;
 }
 
-.hero h1 span{
-    margin:0 20px;
-    font-size:72px;
-    color:#b88a32;
+/* Королівський амперсанд */
+.hero h1.wedding-title span {
+    font-family: 'Pinyon Script', cursive;
+    font-style: normal;
+    font-size: 95px;
+    color: #b88a32;
+    margin: 0 15px;
+    vertical-align: middle;
+    display: inline-block;
 }
 
+/* Опис запрошення */
 .hero p{
-    margin:40px auto;
-    max-width:620px;
-    font-size:22px;
-    line-height:1.8;
-    font-family:'Cormorant Garamond',serif;
+    margin: 35px auto;
+    max-width: 620px;
+    font-size: 22px; 
+    line-height: 1.8;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; 
+    color: #666;
 }
 
+/* Дата весілля */
 .date{
-    display:inline-block;
-    padding:18px 45px;
-    border:1px solid #d4b469;
-    border-radius:50px;
-    font-size:20px;
-    letter-spacing:3px;
-    background:white;
-    box-shadow:0 15px 40px rgba(0,0,0,.08);
+    display: inline-block;
+    padding: 16px 40px;
+    border: 1px solid #d4b469;
+    border-radius: 50px;
+    font-size: 20px;
+    letter-spacing: 3px;
+    background: white;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: normal; 
+    box-shadow: 0 15px 40px rgba(0,0,0,.04);
+    color: #5c4d37;
 }
 
+/* Адаптивність під мобільні телефони */
+@media(max-width:768px){
+    .hero h3 {
+        font-size: 22px; 
+        letter-spacing: 1px;
+        margin-bottom: 20px;
+    }
+
+    .hero h1.wedding-title {
+        font-size: 46px;
+    }
+    
+    .hero h1.wedding-title span {
+        font-size: 65px;
+        margin: 0 8px;
+    }
+
+    .hero p {
+        font-size: 18px;
+    }
+
+    .date {
+        font-size: 16px;
+        padding: 12px 30px;
+    }
+}
 /* ===========================
 COUNTDOWN
 =========================== */
