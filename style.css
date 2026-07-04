@@ -161,7 +161,7 @@ NEW PASTEL ENVELOPE & SEAL BUTTON
     z-index:10;
     width:175px;  
     height:175px;
-    background-image:url('envelope.png'); /* Фото вашої кнопки */
+    background-image:url('envelope.png'); /* Без папок, просто назва файлу */
     background-size:contain;
     background-repeat:no-repeat;
     background-position:center;
@@ -170,7 +170,6 @@ NEW PASTEL ENVELOPE & SEAL BUTTON
     outline:none;
     cursor:pointer;
     border-radius:50%;
-    /* Глибока розсіяна тінь як на фотографії */
     filter:drop-shadow(0px 10px 22px rgba(105, 90, 70, 0.35));
     transition:transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.15), filter 0.25s ease;
 }
