@@ -721,3 +721,113 @@ footer h1{
 }
 
 }
+#openButton{
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    border:none;
+    background:none;
+    cursor:pointer;
+    z-index:100;
+}
+
+.wax-seal{
+
+    width:120px;
+    height:120px;
+
+    border-radius:50%;
+
+    position:relative;
+
+    background:
+    radial-gradient(circle at 35% 35%,
+    #e2c8a5 0%,
+    #b58b61 35%,
+    #8f6645 70%,
+    #6f4e34 100%);
+
+    box-shadow:
+    inset -8px -10px 14px rgba(0,0,0,.25),
+    inset 8px 8px 12px rgba(255,255,255,.25),
+    0 12px 30px rgba(0,0,0,.35);
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    transition:.35s;
+
+    animation:pulseSeal 2s infinite;
+
+}
+
+.wax-seal:hover{
+
+    transform:scale(1.08);
+
+}
+
+.wax-seal:active{
+
+    transform:scale(.94);
+
+}
+
+.shine{
+
+    position:absolute;
+
+    width:70px;
+    height:18px;
+
+    top:18px;
+    left:20px;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.35);
+
+    filter:blur(6px);
+
+    transform:rotate(-18deg);
+
+}
+
+.play{
+
+    width:0;
+    height:0;
+
+    border-top:18px solid transparent;
+    border-bottom:18px solid transparent;
+
+    border-left:30px solid white;
+
+    margin-left:8px;
+
+    filter:drop-shadow(0 2px 4px rgba(0,0,0,.3));
+
+}
+
+@keyframes pulseSeal{
+
+0%{
+
+transform:scale(1);
+
+}
+
+50%{
+
+transform:scale(1.05);
+
+}
+
+100%{
+
+transform:scale(1);
+
+}
+}
