@@ -221,16 +221,16 @@ HERO
     max-width:850px;
 }
 
-/* "Запрошення на весілля" — тепер із нормальним регістром літер */
+/* "Запрошення на весілля" */
 .hero h3{
     font-family: 'Cormorant Garamond', serif;
     font-weight: 400;
     font-style: normal; 
-    letter-spacing: 2px; /* Трохи зменшили відступ, бо літери тепер не великі */
-    text-transform: none; /* ВИПРАВЛЕНО: прибирає автоматичні великі літери */
-    font-size: 32px; /* Збільшили розмір, щоб звичайні літери виглядали так само масштабно */
+    letter-spacing: 2px;
+    text-transform: none;
+    font-size: 32px; 
     margin-bottom: 35px;
-    color: #704915; 
+    color: #a89276; 
     background: transparent;
     padding: 0;
     box-shadow: none;
@@ -269,19 +269,16 @@ HERO
     color: #666;
 }
 
-/* Дата весілля */
+/* Дата весілля — тепер вільно пишеться на фоні, без контейнера та рамок */
 .date{
     display: inline-block;
-    padding: 16px 40px;
-    border: 1px solid #d4b469;
-    border-radius: 50px;
-    font-size: 20px;
-    letter-spacing: 3px;
-    background: white;
+    font-size: 22px; /* Трохи збільшили, щоб дата гарно виділялася без рамки */
+    letter-spacing: 4px;
     font-family: 'Cormorant Garamond', serif;
     font-style: normal; 
-    box-shadow: 0 15px 40px rgba(0,0,0,.04);
     color: #5c4d37;
+    background: transparent;
+    padding: 0;
 }
 
 /* Адаптивність під мобільні телефони */
@@ -306,8 +303,8 @@ HERO
     }
 
     .date {
-        font-size: 16px;
-        padding: 12px 30px;
+        font-size: 18px;
+        letter-spacing: 2px;
     }
 }
 /* ===========================
