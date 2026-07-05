@@ -41,13 +41,8 @@ if (openBtn && envelopeSection && content) {
 
         // 3. Повністю прибираємо верхній шар після того, як листи роз'їдуться (5.5 секунд)
         setTimeout(() => {
-            envelopeSection.style.display = "none";
-
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-        }, 5500); // Таймер синхронізовано на 5.5 секунд
+    envelopeSection.style.display = "none";
+}, 5500); // Таймер синхронізовано на 5.5 секунд
     });
 }
 // ===========================
