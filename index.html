@@ -9,9 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-
-   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,300;1,400&family=Pinyon+Script&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&family=Pinyon+Script&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
 </head>
@@ -40,190 +38,146 @@
     </div>
 
 </section>
-
+<!-- Основний контент сайту (відкривається після натискання кнопки) -->
 <div id="content">
+    <div class="start-photo-screen">
+        <img src="start_photo.jpg" alt="Андрій та Вікторія" class="full-screen-img">
+        
+        <div class="scroll-down-arrow">↓</div>
+    </div>    
 
 <header class="hero">
-
     <div class="hero-overlay"></div>
-
     <div class="hero-content">
-
-    <h3>Запрошення на весілля</h3>
-
-    <h1 class="wedding-title">Андрія <span>&</span> Вікторії</h1>
-
-    <p>
-        Запрошуємо Вас розділити
-        один із найважливіших
-        моментів нашого життя
-    </p>
-
-    <div class="date">
-        15 Серпня 2026
+        <h3>Запрошення на весілля</h3>
+        <h1 class="wedding-title">Андрія <span>&</span> Вікторії</h1>
+        <p>
+            Запрошуємо Вас розділити один із найважливіших моментів нашого життя
+        </p>
+        <div class="date">
+            15 Серпня 2026
+        </div>
     </div>
-
-</div>
-
 </header>
 
-<section class="countdown-section">
-
-    <h2>До нашого весілля залишилось</h2>
-
-    <div id="countdown">
-
-        <div>
-            <span id="days">00</span>
-            <small>Днів</small>
+<section class="wedding-letter">
+    <div class="letter-container">
+        <h2 class="letter-greeting">Дорогі наші<br>рідні та друзі!</h2>
+        
+        <div class="letter-body">
+            <p class="letter-highlight">У цей день ми скажемо<br>одне одному <span>ТАК</span></p>
+            
+            <p>І будемо щасливі розділити<br>цей день разом із вами</p>
+            
+            <p>Ми хочемо, щоб у цей особливий день<br>поруч були ті, кого ми любимо.</p>
+            
+            <p class="letter-footer">Тому з радістю та щирим серцем<br>запрошуємо Вас на наше весілля!</p>
         </div>
-
-        <div>
-            <span id="hours">00</span>
-            <small>Годин</small>
-        </div>
-
-        <div>
-            <span id="minutes">00</span>
-            <small>Хвилин</small>
-        </div>
-
-        <div>
-            <span id="seconds">00</span>
-            <small>Секунд</small>
-        </div>
-
     </div>
-
 </section>
 
-<section class="timeline">
 
-<h2>План дня</h2>
+<section class="timeline-interactive">
+    <h2>План дня</h2>
+    
+    <div class="timeline-wrapper">
+        <svg class="timeline-svg" viewBox="0 0 400 380" preserveAspectRatio="none">
+            <path id="wave-path" d="M 200,0 C 360,95 40,285 200,380" fill="none" stroke="#b88a32" stroke-width="4" />
+        </svg>
 
-<div class="event">
+        <div id="moving-heart" class="moving-heart">
+            <svg viewBox="0 0 32 29.6" width="30" height="30">
+                <path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2
+                c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z" fill="#b88a32"/>
+            </svg>
+        </div>
 
-<div class="icon">
-💍
-</div>
+        <div class="timeline-point point-left">
+            <div class="point-content">
+                <h3>Церемонія одруження</h3>
+                <div class="time-badge">12:45</div>
+                <p>Рівненський ДРАЦС</p>
+            </div>
+        </div>
 
-<div class="info">
+        <div class="timeline-point point-right">
+            <div class="point-content">
+                <h3>Святкування</h3>
+                <div class="time-badge">14:00</div>
+                <p>Готельно-ресторанний комплекс «ОТТО»</p>
+            </div>
+        </div>
 
-<h3>Церемонія одруження</h3>
-
-<h4>12:45</h4>
-
-<p>
-Рівненський ДРАЦС
-</p>
-
-<a
-target="_blank"
-href="https://maps.google.com">
-Відкрити карту
-</a>
-
-</div>
-
-</div>
-
-<div class="event">
-
-<div class="icon">
-🥂
-</div>
-
-<div class="info">
-
-<h3>Святкування</h3>
-
-<h4>14:00</h4>
-
-<p>
-Готельно-ресторанний комплекс
-«ОТТО»
-</p>
-
-<a
-target="_blank"
-href="https://maps.google.com">
-Прокласти маршрут
-</a>
-
-</div>
-
-</div>
-
+        <div class="timeline-point point-center">
+            <div class="point-content">
+                <h3>Завершення вечора</h3>
+                <div class="time-badge">22:00</div>
+            </div>
+        </div>
+    </div>
 </section>
 
-<section class="gallery">
+<section class="location-section">
+    <div class="location-container">
+        <h2 class="location-title">Місце проведення</h2>
+        
+        <div class="location-heart">
+            <svg viewBox="0 0 32 29.6" width="22" height="22">
+                <path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2
+                c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z" fill="#b88a32"/>
+            </svg>
+        </div>
 
-<h2>Наші моменти</h2>
+        <h3 class="location-venue">Готель & Ресторан “ОТТО”</h3>
+        
+        <div class="location-divider"></div>
+        
+        <p class="location-address">с. Вересневе, вул. 7 Серпня, 3</p>
 
-<div class="photos">
-
-<div class="photo">
-<img src="assets/images/photo1.jpg">
-</div>
-
-<div class="photo">
-<img src="assets/images/photo2.jpg">
-</div>
-
-<div class="photo">
-<img src="assets/images/photo3.jpg">
-</div>
-
-</div>
-
+        <div class="location-image-wrapper">
+            <img src="otto_embroidery.jpg" alt="Готель & Ресторан ОТТО" class="location-img">
+        </div>
+    </div>
 </section>
 
 <section class="quote">
-
-<p>
-
-Любов —
-це історія,
-яку ми пишемо разом.
-
-</p>
-
+    <p>Любов — це історія, яку ми пишемо разом.</p>
 </section>
 
-<footer>
+<footer class="footer-photo-section">
+    <!-- Твоє фото на задньому плані -->
+    <img src="footer_photo.jpg" alt="Весільне фото" class="footer-bg-img">
+    
+    <!-- Накладання темного шару для читабельності -->
+    <div class="footer-overlay"></div>
 
-<h2>
-
-Чекаємо на Вас
-
-</h2>
-
-<h1>
-
-Андрій
-<span>&</span>
-Вікторія
-
-</h1>
-
-<p>
-
-15.08.2026
-
-</p>
-
+    <!-- Контент, який тепер буде знизу поверх фото -->
+    <div class="footer-content-bottom">
+        <h2>До зустрічі через:</h2>
+        
+        <div id="footer-countdown">
+            <div class="countdown-item">
+                <span id="f-days">00</span>
+                <small>днів</small>
+            </div>
+            <div class="countdown-item">
+                <span id="f-hours">00</span>
+                <small>годин</small>
+            </div>
+            <div class="countdown-item">
+                <span id="f-minutes">00</span>
+                <small>хвилин</small>
+            </div>
+            <div class="countdown-item">
+                <span id="f-seconds">00</span>
+                <small>секунд</small>
+            </div>
+        </div>
+    </div>
 </footer>
 
-</div>
-
-<audio
-id="music"
-loop>
-
-<source
-src="assets/music/music.mp3"
-type="audio/mpeg">
-
+<audio id="music" loop>
+    <source src="assets/music/music.mp3" type="audio/mpeg">
 </audio>
 
 <script src="script.js"></script>

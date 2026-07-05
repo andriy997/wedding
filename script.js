@@ -124,3 +124,67 @@ document.querySelectorAll(".photo img").forEach(img => {
 if (music) {
     music.volume = 0.4;
 }
+window.addEventListener('scroll', positionHeart);
+window.addEventListener('resize', positionHeart);
+document.addEventListener('DOMContentLoaded', positionHeart);
+
+function positionHeart() {
+    const wrapper = document.querySelector('.timeline-wrapper');
+    const path = document.getElementById('wave-path');
+    const heart = document.getElementById('moving-heart');
+    
+    if (!wrapper || !path || !heart) return;
+
+    const rect = wrapper.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+
+    const startTrigger = windowHeight / 2;
+    const currentScroll = startTrigger - rect.top;
+    let scrollPercent = currentScroll / wrapper.offsetHeight;
+
+    if (scrollPercent < 0) scrollPercent = 0;
+    if (scrollPercent > 1) scrollPercent = 1;
+
+    const pathLength = path.getTotalLength();
+    const point = path.getPointAtLength(pathLength * scrollPercent);
+
+    const svgRect = path.ownerSVGElement.getBoundingClientRect();
+    
+    // Масштабування під нову висоту 380
+    const scaleX = svgRect.width / 400;
+    const scaleY = svgRect.height / 380;
+
+    heart.style.left = `${point.x * scaleX}px`;
+    heart.style.top = `${point.y * scaleY}px`;
+}
+function initFooterCountdown() {
+    // Встановлюємо дату: 15 серпня 2026 року, 12:45:00
+    const targetDate = new Date("August 15, 2026 12:45:00").getTime();
+
+    const timerInterval = setInterval(function() {
+        const now = new Date().getTime();
+        const difference = targetDate - now;
+
+        // Якщо дата вже настала
+        if (difference < 0) {
+            clearInterval(timerInterval);
+            document.getElementById("footer-countdown").innerHTML = "<h3 style='font-family: \"Cormorant Garamond\", serif; font-size: 32px;'>Цей омріяний день настав!</h3>";
+            return;
+        }
+
+        // Розрахунок днів, годин, хвилин та секунд
+        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+        // Виведення результату в HTML (з додаванням нуля попереду, якщо цифра менша 10)
+        document.getElementById("f-days").innerText = days < 10 ? "0" + days : days;
+        document.getElementById("f-hours").innerText = hours < 10 ? "0" + hours : hours;
+        document.getElementById("f-minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
+        document.getElementById("f-seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
+    }, 1000);
+}
+
+// Запускаємо таймер після завантаження сторінки
+document.addEventListener("DOMContentLoaded", initFooterCountdown);
